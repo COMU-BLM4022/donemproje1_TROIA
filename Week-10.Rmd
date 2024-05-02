@@ -1,0 +1,44 @@
+---
+title: "Bilgi Yönetim Sistemi Raporu"
+authors: Semih Sarı 200401071, Merve Yılmaz 210401009, Berat Öcal 200401017, Ümit Atakan Günel 210401004
+date: "01/05/2024"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+## Q1: IMS Platformunun Belirlenmesi
+
+Bu bölümde, IMS platformunun seçimi için yapılan süreçler ve sonuçları ele alınmaktadır.
+
+### Seçilen Platform: SuiteCRM
+
+- **Lisans**: Affero General Public License (AGPL)
+- **Kısa Tarihçe**: SuiteCRM, açık kaynaklı bir müşteri ilişkileri yönetimi (CRM) platformudur. SuiteCRM, SugarCRM'in açık kaynaklı bir türevidir ve işletmelerin müşteri ilişkilerini yönetmelerini sağlar.
+- **Kullanıcıya Sunduğu Özellikler**:
+  - Müşteri Yönetimi: SuiteCRM, müşteri ilişkilerini yönetmek için kapsamlı araçlar sunar, potansiyel müşterileri izler, satış fırsatlarını yönetir ve mevcut müşterilerle etkileşime geçer.
+  - Satış Yönetimi: Satış ekipleri, SuiteCRM üzerinden müşteri bilgilerini ve satış fırsatlarını yönetebilir, satış hunisini izleyebilir ve satış performansını analiz edebilir.
+  - Pazarlama Otomasyonu: SuiteCRM, pazarlama kampanyalarını yönetmek ve pazarlama faaliyetlerini otomatikleştirmek için araçlar sunar.
+  - Raporlama: SuiteCRM, kullanıcıların özelleştirilebilir raporlar oluşturmasına ve iş zekası çözümleri entegre etmesine olanak tanır.
+- **Kullanılan Yazılım ve Teknolojiler**:
+  - Programlama Dili: PHP
+  - Veritabanı ve Veri Kaynakları: MySQL, MariaDB, MSSQL Server
+  - Diğer Teknolojiler: JavaScript, HTML, CSS
+- **API Özellikleri**: 
+  - SuiteCRM'in REST API'si, harici uygulamaların SuiteCRM ile etkileşimde bulunmasını sağlar. API, veri alışverişi ve iş süreçlerinin otomatikleştirilmesi için kullanılabilir.
+
+### Seçim Nedenleri
+SuiteCRM'in açık kaynaklı olması, geniş bir kullanıcı tabanına sahip olması ve müşteri ilişkileri yönetimi için kapsamlı özellikler sunması önemli kriterlerdir.
+
+#### SuiteCRM'in Sağladığı Faydalar
+
+1. **Açık Kaynaklı ve Ücretsiz**: SuiteCRM, açık kaynaklı bir platform olduğu için lisans maliyetleri düşüktür ve özgürce özelleştirilebilir.
+  
+2. **Müşteri İlişkileri Yönetimi**: SuiteCRM, müşteri ilişkilerini yönetmek için kapsamlı araçlar sunar, bu da şirketlerin müşteri odaklı bir yaklaşım benimsemesini sağlar.
+  
+3. **Esnek ve Özelleştirilebilir**: SuiteCRM, işletmelerin ihtiyaçlarına göre özelleştirilebilir ve geniş bir ekosistem sayesinde farklı entegrasyonlarla genişletilebilir.
+  
+4. **Raporlama Yetenekleri**: SuiteCRM, kullanıcıların özelleştirilebilir raporlar oluşturmasına ve iş zekası çözümleri entegre etmesine olanak tanır.
+
+Bu faydalar, SuiteCRM'in IMS çözümleri için tercih edilmesinde önemli rol oynamıştır.
