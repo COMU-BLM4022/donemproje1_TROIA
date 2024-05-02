@@ -1,0 +1,130 @@
+---
+title: "Bilgi Yönetim Sistemi Raporu"
+authors: Semih Sarı 200401071, Merve Yılmaz 210401009, Berat Öcal 200401017, Ümit Atakan Günel 210401004
+date: "01/05/2024"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+## Q1: IMS Platformunun Belirlenmesi
+
+Bu bölümde, IMS platformunun seçimi için yapılan süreçler ve sonuçları ele alınmaktadır.
+
+### Seçilen Platform: SuiteCRM
+
+- **Lisans**: Affero General Public License (AGPL)
+- **Kısa Tarihçe**: SuiteCRM, açık kaynaklı bir müşteri ilişkileri yönetimi (CRM) platformudur. SuiteCRM, SugarCRM'in açık kaynaklı bir türevidir ve işletmelerin müşteri ilişkilerini yönetmelerini sağlar.
+- **Kullanıcıya Sunduğu Özellikler**:
+  - Müşteri Yönetimi: SuiteCRM, müşteri ilişkilerini yönetmek için kapsamlı araçlar sunar, potansiyel müşterileri izler, satış fırsatlarını yönetir ve mevcut müşterilerle etkileşime geçer.
+  - Satış Yönetimi: Satış ekipleri, SuiteCRM üzerinden müşteri bilgilerini ve satış fırsatlarını yönetebilir, satış hunisini izleyebilir ve satış performansını analiz edebilir.
+  - Pazarlama Otomasyonu: SuiteCRM, pazarlama kampanyalarını yönetmek ve pazarlama faaliyetlerini otomatikleştirmek için araçlar sunar.
+  - Raporlama: SuiteCRM, kullanıcıların özelleştirilebilir raporlar oluşturmasına ve iş zekası çözümleri entegre etmesine olanak tanır.
+- **Kullanılan Yazılım ve Teknolojiler**:
+  - Programlama Dili: PHP
+  - Veritabanı ve Veri Kaynakları: MySQL, MariaDB, MSSQL Server
+  - Diğer Teknolojiler: JavaScript, HTML, CSS
+- **API Özellikleri**: 
+  - SuiteCRM'in REST API'si, harici uygulamaların SuiteCRM ile etkileşimde bulunmasını sağlar. API, veri alışverişi ve iş süreçlerinin otomatikleştirilmesi için kullanılabilir.
+
+### Seçim Nedenleri
+SuiteCRM'in açık kaynaklı olması, geniş bir kullanıcı tabanına sahip olması ve müşteri ilişkileri yönetimi için kapsamlı özellikler sunması önemli kriterlerdir.
+
+#### SuiteCRM'in Sağladığı Faydalar
+
+1. **Açık Kaynaklı ve Ücretsiz**: SuiteCRM, açık kaynaklı bir platform olduğu için lisans maliyetleri düşüktür ve özgürce özelleştirilebilir.
+  
+2. **Müşteri İlişkileri Yönetimi**: SuiteCRM, müşteri ilişkilerini yönetmek için kapsamlı araçlar sunar, bu da şirketlerin müşteri odaklı bir yaklaşım benimsemesini sağlar.
+  
+3. **Esnek ve Özelleştirilebilir**: SuiteCRM, işletmelerin ihtiyaçlarına göre özelleştirilebilir ve geniş bir ekosistem sayesinde farklı entegrasyonlarla genişletilebilir.
+  
+4. **Raporlama Yetenekleri**: SuiteCRM, kullanıcıların özelleştirilebilir raporlar oluşturmasına ve iş zekası çözümleri entegre etmesine olanak tanır.
+
+Bu faydalar, SuiteCRM'in IMS çözümleri için tercih edilmesinde önemli rol oynamıştır.
+
+## Q2: Dataset Tanımı
+
+Bu bölümde, kullanılacak veri setinin detayları ve veri alımı ile ilgili planlar ele alınmaktadır.
+
+### Veri Seti Detayları
+- **
+- **İçerik:** Veri seti, müşterilerin aldığı hizmetlerin detaylarını içerir. Her bir hizmetin tarih ve saat bilgileriyle birlikte kullanıcı ve hizmet kimlikleri bulunmaktadır.
+- **Veri Oluşturma Yöntemi:** Veri seti, şirketin hizmet sisteminden toplanmıştır. Her bir hizmet, kullanıcıların çeşitli kategoriler altında aldığı hizmetleri temsil eder.
+- **Veri Formatı:** Veri seti CSV formatında bulunmaktadır.
+- **Veri Boyutu:** Veri seti toplamda 4 değişken ve 162.523 gözlemden oluşur. Dosyanın boyutu yaklaşık 5 MB'dır.
+
+### Veri İthalatı ve İşleme Planı
+
+- **Veri İthalatı:** Veri, IMS platformuna veritabanından aktarılacaktır. Bu işlem, veri setinin IMS'in kullanacağı veritabanına aktarılmasını içerir.
+- **IMS'e İthalattan Sonra:** Veri IMS platformuna aktarıldıktan sonra, R kullanılarak veri çekme işlemi gerçekleştirilecektir. Bu işlemi doğrudan IMS'in kullandığı veritabanına API ile R'in bağlanması yoluyla gerçekleştirilecektir.
+
+Bu plan doğrultusunda, veri setinin IMS platformuna başarılı bir şekilde aktarılması ve R kullanılarak veri çekme işleminin gerçekleştirilmesi planlanmaktadır.
+
+
+## Q3: İş Tanımı
+ 
+ 
+### İş / Kuruluş Tanımı
+ 
+Kuruluş, hizmet verenler ile hizmet almak isteyenleri buluşturan bir platformdur. Bilgisayarın veya akıllı telefonunun üzerinden birkaç dokunuşla temizlik, tadilat, nakliyat gibi çeşitli hizmetlere kolayca ulaşılmasını sağlar. Platform, kullanıcıların çeşitli ihtiyaçlarına yönelik geniş bir hizmet yelpazesini kapsar ve kullanıcıların bu hizmetlere kolayca erişebilmesini sağlar.
+ 
+### İşin Aktiviteleri ve Rutin Operasyonları
+ 
+Hizmet aracının iş ve operasyonları şu aktiviteleri içerir:
+ 
+- Hizmet Sağlayıcı ve Hizmet Alanın Eşleştirilmesi
+- Kullanıcı Taleplerinin Karşılanması
+- Ödeme İşlemlerinin Yönetimi
+- İletişim ve Müşteri Destek Hizmetleri
+- Hizmet Kalitesinin İzlenmesi ve Değerlendirilmesi
+ 
+### Gelir Modeli
+ 
+Kuruluş, kullanıcıların sunduğu hizmetlerden alınan komisyonlar üzerinden gelir elde eder. Platform üzerinden gerçekleşen işlemlerin bir yüzdesi alınır.
+ 
+### İş ve İş Modelinin Zorlukları ve Avantajları
+ 
+#### Zorluklar
+ 
+- Rekabetin Yoğunluğu: Benzer hizmetleri sunan diğer platformlarla rekabet etmek zor olabilir.
+- Hizmet Kalitesinin Güvencesi: Platform üzerinden sunulan hizmetlerin kalitesinin kontrol edilmesi ve sağlanması zorluğu.
+- Kullanıcı Güveni: Kullanıcıların platforma olan güveninin sağlanması ve korunması.
+ 
+#### Avantajlar
+ 
+- Geniş Kullanıcı Tabanı: Platformun geniş kullanıcı tabanına sahip olması.
+- Çeşitlilik: Geniş hizmet yelpazesi ve çeşitli seçenekler sunması.
+- Kolay Erişim: Kullanıcıların kolayca platforma erişebilmesi ve hizmetlerden faydalanabilmesi.
+ 
+### Rakipler ve Avantajlar / Dezavantajlar
+ 
+Potansiyel rakipleri arasında benzer hizmetleri sunan diğer platformlar yer almaktadır. Bu platformlar da geniş bir kullanıcı tabanına ve çeşitli hizmetlere sahip olabilir. Rakiplerin avantajları ve dezavantajları, hizmet kalitesi, kullanıcı deneyimi ve fiyatlandırma gibi faktörlere bağlı olarak değişebilir.
+ 
+## Q4: İyileştirme (Optimizasyon) Stratejisi
+ 
+### Fayda Sağlanması Planlanan Alanlar
+ 
+Proje kapsamında, veri seti üzerinde yapılacak olan Association Rule Learning analiziyle aşağıdaki faydalar sağlanması planlanmaktadır:
+ 
+1. **Hizmet Tavsiyelerinin Geliştirilmesi**: Veri setinde bulunan kullanıcıların aldıkları hizmetler ve bu hizmetlerin kategorileri üzerinden, Association Rule Learning ile bir hizmet tavsiye sistemi oluşturulması hedeflenmektedir. Bu sayede, kullanıcıların ilgilerine göre önerilerde bulunularak müşteri memnuniyeti ve hizmet kalitesi arttırılabilir.
+ 
+2. **Pazarlama ve Satış Stratejilerinin Güçlendirilmesi**: Association Rule Learning analizi sonucunda elde edilecek olan ilişkiler ve kural setleri, pazarlama ve satış stratejilerinin belirlenmesinde kullanılabilir. Hangi hizmetlerin bir arada talep edildiğine dair bilgi, pazarlama kampanyalarının ve promosyonların daha etkili bir şekilde hedeflenmesine olanak tanır.
+ 
+3. **Müşteri Segmentasyonunun İyileştirilmesi**: Veri analizi sonucunda elde edilecek olan ilişkiler, müşterilerin farklı segmentlere ayrılmasını sağlayabilir. Bu sayede, müşteri ihtiyaçlarına daha özelleştirilmiş hizmetler sunularak müşteri memnuniyeti artırılabilir ve sadakat sağlanabilir.
+ 
+### Strateji Uygulama Planı
+ 
+Proje kapsamında, aşağıdaki adımların takip edilmesi planlanmaktadır:
+ 
+1. **Veri Setinin Hazırlanması**: İlk olarak, veri seti üzerinde gerekli ön işlemler yapılarak veri seti hazırlanacaktır. Bu adımda, veri seti içerisindeki kullanıcıların aldıkları hizmetler ve bu hizmetlerin tarih bilgileri kullanılarak bir sepet tanımı oluşturulacaktır.
+ 
+2. **Association Rule Learning Analizi**: Hazırlanan veri seti üzerinde Association Rule Learning algoritması uygulanacaktır. Bu adımda, ilişkisel kurallar ve kural setleri elde edilerek hizmetler arasındaki ilişkiler analiz edilecektir.
+ 
+3. **Hizmet Tavsiye Sistemi Oluşturma**: Association Rule Learning analizi sonucunda elde edilen kural setleri kullanılarak bir hizmet tavsiye sistemi oluşturulacaktır. Bu sistem, kullanıcıların ilgi ve tercihlerine göre hizmet önerilerinde bulunarak müşteri memnuniyetini artıracaktır.
+ 
+4. **Sonuçların Değerlendirilmesi ve Uygulamaya Geçirme**: Oluşturulan hizmet tavsiye sistemi üzerinde yapılan testler ve değerlendirmeler sonucunda elde edilen sonuçlar incelenecek ve gerekli düzeltmeler yapılacaktır. Daha sonra, sistemin canlı ortama geçirilerek kullanıma sunulması planlanmaktadır.
+ 
+Bu adımların takip edilmesiyle, veri analizi sürecinden elde edilen bilgilerin iş stratejilerine entegre edilmesi ve işletme performansının artırılması hedeflenmektedir.
+
+
