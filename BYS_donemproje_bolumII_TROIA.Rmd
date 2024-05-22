@@ -1,0 +1,17 @@
+---
+title: "Bilgi Yönetim Sistemleri - Bitirme Projesi Rapor : 
+Semih Sarı 200401071,
+Merve Yılmaz 210401009,
+Berat Öcal 200401017,
+Ümit Atakan Günel 210401004"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+## Q1: İş probleminin tanımı 
+
+Türkiye’nin en büyük online hizmet platformu olan Armut, hizmet verenler ile hizmet almak isteyenleri buluşturmaktadır. Kullanıcılar, bilgisayar veya akıllı telefonları üzerinden birkaç dokunuşla temizlik, tadilat, nakliyat gibi çeşitli hizmetlere kolayca ulaşabilmektedir. Bu raporda, Armut platformunda hizmet alan kullanıcıların almış oldukları servis ve kategorileri içeren veri seti kullanılarak, Association Rule Learning yöntemi ile bir ürün tavsiye sistemi oluşturulması hedeflenmektedir.Bu sistem, kullanıcıların ilgilerine göre hizmet önerileri sunarak müşteri memnuniyetini ve hizmet kalitesini artırmayı amaçlamaktadır.
+
+SuiteCRM'in müşteri yönetimi, satış yönetimi, pazarlama otomasyonu ve raporlama özelliklerinden yararlanılarak bu hedefe ulaşılacaktır. SuiteCRM'in açık kaynaklı ve özelleştirilebilir yapısı, düşük maliyetli ve esnek çözümler sunarak iş süreçlerinin optimize edilmesine katkı sağlayacaktır. Bu nedenle SuiteCRM, bu proje için ideal bir BYS platformu olarak seçilmiştir.
