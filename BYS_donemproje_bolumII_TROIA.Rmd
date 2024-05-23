@@ -1,0 +1,191 @@
+---
+title: "Bilgi Yönetim Sistemleri - Bitirme Projesi Rapor : 
+Semih Sarı 200401071,
+Merve Yılmaz 210401009,
+Berat Öcal 200401017,
+Ümit Atakan Günel 210401004"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+## Q1: İş probleminin tanımı 
+
+Şirketimiz, hizmet verenler ile hizmet almak isteyenleri buluşturmaktadır. Kullanıcılar, bilgisayar veya akıllı telefonları üzerinden birkaç dokunuşla temizlik, tadilat, nakliyat gibi çeşitli hizmetlere kolayca ulaşabilmektedir. Bu raporda, Troia platformunda hizmet alan kullanıcıların almış oldukları servis ve kategorileri içeren veri seti kullanılarak, Association Rule Learning yöntemi ile bir ürün tavsiye sistemi oluşturulması hedeflenmektedir.Bu sistem, kullanıcıların ilgilerine göre hizmet önerileri sunarak müşteri memnuniyetini ve hizmet kalitesini artırmayı amaçlamaktadır.
+
+SuiteCRM'in müşteri yönetimi, satış yönetimi, pazarlama otomasyonu ve raporlama özelliklerinden yararlanılarak bu hedefe ulaşılacaktır. SuiteCRM'in açık kaynaklı ve özelleştirilebilir yapısı, düşük maliyetli ve esnek çözümler sunarak iş süreçlerinin optimize edilmesine katkı sağlayacaktır. Bu nedenle SuiteCRM, bu proje için ideal bir BYS platformu olarak seçilmiştir.
+
+
+## Q2: İş problemini çözmede kullanılacak data seti 
+
+# Veri Seti
+*******************************
+*Veri seti müşterilerin aldıkları servislerden ve bu servislerin kategorilerinden oluşmaktadır.*
+*Alınan her hizmetin tarih ve saat bilgisini içermektedir.*
+ 
+- **UserId**: Müşteri numarası
+- **ServiceId**: Her kategoriye ait anonimleştirilmiş servislerdir. (Örnek : *Temizlik* kategorisi altında *koltuk yıkama* servisi)
+  - *Bir ServiceId farklı kategoriler altında bulanabilir ve farklı kategoriler altında farklı servisleri ifade eder.*
+  - (Örnek: CategoryId’si *7* ServiceId’si *4* olan hizmet *petek temizliği* iken CategoryId’si *2* ServiceId’si *4* olan hizmet *mobilya montaj*)
+- **CategoryId**: Anonimleştirilmiş kategorilerdir. (Örnek : *Temizlik, nakliyat, tadilat* kategorisi)
+- **CreateDate**: Hizmetin satın alındığı tarih
+- **Ad**: Müşteri adı
+- **Soyad**: Müşteri soyadı
+- **email**: Müşteri e-posta adresi
+ 
+```{r echo=FALSE}
+
+library(readr)
+
+df <- read_csv("data_raw.csv",show_col_types = FALSE)
+head(df)
+```
+ 
+### Veri Seti Kaynağı
+Bu veri seti, Kaggle platformundan bulunmuştur. [Armut Data](https://www.kaggle.com/datasets/sumeyraaksekiboz/armut-data/data) adlı veri setidir.
+ 
+- **Veriyi Toplayan/Yaratanlar**: Veri setini oluşturanlar, Armut platformu tarafından müşterilerin hizmet satın alma işlemleri sırasında otomatik olarak toplanmış verileri derlemiştir.
+- **Veri Toplama Yöntemi**: Armut platformu, kullanıcıların platform üzerindeki hizmet taleplerini ve satın alımlarını kaydederek bu veriyi oluşturmuştur.
+ 
+### Veri Üzerinde Yapılan Değişiklikler
+Veri seti üzerinde herhangi bir değişiklik yapılmamıştır. Ancak sentetik veri eklemek için ad, soyad ve e-posta bilgileri gibi ek alanlar oluşturulmuştur.
+ 
+### Sentetik Veri Üretimi
+Sentetik veri eklemek için ad, soyad ve e-posta bilgileri gibi ek alanlar oluşturulmuştur. Bu bilgiler, gerçek kullanıcı verilerinden türetilmemiş ve rastgele oluşturulmuştur. Sentetik veri eklemek için kullanılan süreç, sentetik veri üretimi için yaygın olarak kullanılan Python kütüphaneleri kullanılarak gerçekleştirilmiştir.
+ 
+**Sonuç**
+Bu veri seti, müşterilerin hizmet satın alma alışkanlıklarını analiz etmek ve hizmet kategorileri arasındaki ilişkileri incelemek için kullanılacaktır. Kaggle platformundan elde edilen bu veri seti, gerçek dünya kullanıcı davranışlarını temsil etmektedir ve çeşitli analizler için potansiyel sunmaktadır. Sentetik veri eklenerek, veri setinin zenginleştirilmesi ve daha geniş kapsamlı analizler yapılabilmesi sağlanmıştır.
+
+## Q3: Veri Seti Keşifsel Analizi 
+
+### Önemli Sütunlar ve Veri Tipleri
+
+*Bu tabloda veri setindeki önemli sütunlar ve bunların veri tipleri yer almaktadır.*
+```{r echo=FALSE}
+library(knitr)
+columns_data <- data.frame(
+  Sutun = c("UserId", "ServiceId", "CategoryId", "CreateDate", "Ad", "Soyad", "email"),
+  Veri_Tipi = c("Sayısal", "Sayısal", "Sayısal", "Tarih/Zaman", "Metin", "Metin", "Metin")
+)
+kable(columns_data, caption = "Önemli Sütunlar ve Veri Tipleri", align = "c")
+```
+
+### Özellik Çıkarımı
+#### Hizmet Sütununun Oluşturulması
+
+Veri setinde ServiceId ve CategoryId sütunları birleştirilerek yeni bir Hizmet sütunu oluşturulmuştur. Bu işlem, her hizmetin kategorisiyle birlikte benzersiz bir tanımının yapılmasını sağlamaktadır. Bu sayede, hizmet ve kategori ilişkisi daha net bir şekilde analiz edilebilmektedir.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+```{r  echo=FALSE}
+# Gerekli kütüphaneleri yükle
+library(dplyr)
+
+# Hizmet sütununu oluştur
+df <- df %>%
+  mutate(Hizmet = paste(ServiceId, CategoryId, sep = "_"))
+
+```
+
+
+#### Sepet Tanımının Oluşturulması
+
+Veri seti hizmetlerin alındığı tarih ve saat bilgilerini içermektedir, ancak herhangi bir sepet tanımı (örneğin fatura vb.) bulunmamaktadır. Association Rule Learning uygulayabilmek için bir sepet tanımı oluşturulması gerekmektedir. Bu çalışmada, sepet tanımı her bir müşterinin aylık aldığı hizmetler olarak belirlenmiştir.
+
+Örneğin, 7256 id'li müşteri 2017'nin 8. ayında aldığı hizmetler bir sepeti, 2017'nin 10. ayında aldığı hizmetler ise başka bir sepeti ifade etmektedir. Sepetleri benzersiz bir ID ile tanımlamak için öncelikle sadece yıl ve ay içeren yeni bir NEW_DATE değişkeni oluşturulmuş ve UserId ile bu yeni tarih değişkeni birleştirilerek SepetID adlı yeni bir değişken oluşturulmuştur.
+
+```{r echo=FALSE}
+# Sadece yıl ve ay içeren yeni bir tarih sütunu oluşturma
+df <- df %>%
+  mutate(NEW_DATE = format(CreateDate, "%Y-%m"))
+
+# SepetID sütununu oluşturma
+df <- df %>%
+  mutate(SepetID = paste(UserId, NEW_DATE, sep = "_"))
+
+# Sadece 7256 id'li kullanıcıyı ve 2017-08 tarihini seçme ve ilgili sütunları gösterme
+df_selected <- df %>%
+  filter(UserId == 7256 & NEW_DATE == "2017-08") %>%
+  select(UserId, Hizmet, NEW_DATE, SepetID)
+
+# Sonuçları görüntüle
+df_selected
+```
+
+
+**SepetID Sütununun Oluşturulması**
+
+Her bir müşterinin aylık aldığı hizmetlerin bir sepet olarak tanımlanabilmesi için `SepetID` sütunu oluşturulmuştur. Bu işlem, kullanıcı kimliği (`UserId`) ve hizmetin alındığı tarih (`CreateDate`) kullanılarak yapılmıştır. `CreateDate` sütunundan sadece yıl ve ay bilgileri alınarak `NEW_DATE` sütunu oluşturulmuş ve ardından `UserId` ile birleştirilerek `SepetID` sütunu elde edilmiştir.
+
+*Aşağıdaki tabloda veri setinin son hali görünmektedir.*
+
+```{r echo=FALSE}
+library(dplyr)
+
+# NEW_DATE sütununu oluştur
+df <- df %>%
+  mutate(NEW_DATE = format(as.Date(CreateDate), "%Y-%m"))
+
+# SepetID sütununu oluştur
+df <- df %>%
+  mutate(SepetID = paste(UserId, NEW_DATE, sep = "_"))
+
+# İlk birkaç satırı görüntüle
+head(df)
+
+```
+
+### Eksik Veri Analizi
+
+*Veri setindeki eksik verilerin analizi yapılmıştır. Bu analiz, hangi sütunlarda ve ne oranda eksik veri bulunduğunu göstermektedir.*
+```{r echo=FALSE}
+# Eksik Veri Analizi Tablosu
+missing_data <- data.frame(Sutun = colnames(df), Eksik_Veri_Yuzdesi = colMeans(is.na(df)) * 100)
+missing_data
+```
+### Kategorik Değişken Dağılımı
+Kategori dağılımı, her bir kategoride bulunan hizmet sayısını göstermektedir. Aşağıdaki grafik, veri setinde en çok alınan hizmet kategorilerini görselleştirmektedir.
+```{r echo=FALSE}
+# Kategori Dağılımı Grafiği
+library(ggplot2)
+category_distribution <- table(df$CategoryId)
+category_distribution_df <- data.frame(Kategori = names(category_distribution), Frekans = as.numeric(category_distribution))
+ggplot(category_distribution_df, aes(x = reorder(Kategori, -Frekans), y = Frekans)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "CategoryId Dağılımı", x = "Kategori", y = "Frekans") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+*Grafikten görüleceği üzere, veri setinde en çok alınan hizmet kategorisi birinci sırada 4 ID'li "Eğitim" kategorisi, ikinci sırada ise 0 ID'li "Temizlik" kategorisi yer almaktadır*
+
+### Benzersiz Değer Kontrolü
+
+Veri setindeki sütunlarda kaç farklı benzersiz değer bulunduğu incelenmiştir. Bu analiz, veri setindeki çeşitliliği ve potansiyel anormallikleri tespit etmeye yardımcı olmaktadır.
+``` {r echo = FALSE}
+# Benzersiz değerlerin kontrolü
+unique_values <- lapply(df, unique)
+unique_table <- data.frame(Sutun = names(unique_values), Benzersiz_Degerler = sapply(unique_values, length))
+kable(unique_table, caption = "Benzersiz Değerler", align = "c")
+
+```
+
+### Sayısal Değişkenler İçin Temel İstatistikler
+
+Sayısal ve tarih bilgisi içeren değişkenler için temel istatistikler hesaplanmıştır. Bu istatistikler, veri setindeki sayısal değerlerin genel dağılımını ve özetini sunmaktadır.
+
+``` {r echo = FALSE}
+# Sayısal Değişkenler için Temel İstatistikler
+# Ad, Soyad ve Email Değişkenlerini Filtrele
+numeric_df <- df[, !(colnames(df) %in% c("Ad", "Soyad", "email" , "Hizmet","NEW_DATE","SepetID"))]
+# Temel İstatistikler
+numeric_summary <- summary(numeric_df)
+kable(numeric_summary, caption = "Sayısal Değişkenler İçin Temel İstatistikler", align = "c")
+
+
+```
+
+
