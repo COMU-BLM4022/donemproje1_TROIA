@@ -1646,9 +1646,8 @@ platformu olarak seçilmiştir.</p>
 </div>
 <div id="q2-iş-problemini-çözmede-kullanılacak-data-seti" class="section level2">
 <h2>Q2: İş problemini çözmede kullanılacak data seti</h2>
-</div>
-<div id="veri-seti" class="section level1">
-<h1>Veri Seti</h1>
+<div id="veri-seti" class="section level3">
+<h3>Veri Seti</h3>
 <hr />
 <p><em>Veri seti müşterilerin aldıkları servislerden ve bu servislerin
 kategorilerinden oluşmaktadır.</em> <em>Alınan her hizmetin tarih ve
@@ -1676,6 +1675,7 @@ kategoriler altında farklı servisleri ifade eder.</em></li>
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["UserId"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["ServiceId"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["CategoryId"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["CreateDate"],"name":[4],"type":["dttm"],"align":["right"]},{"label":["Ad"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Soyad"],"name":[6],"type":["chr"],"align":["left"]},{"label":["email"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"25446","2":"4","3":"5","4":"2017-08-06 16:11:00","5":"Zachary","6":"Hess","7":"rosborne@example.org"},{"1":"22948","2":"48","3":"5","4":"2017-08-06 16:12:00","5":"Amber","6":"Floyd","7":"masseykimberly@example.org"},{"1":"10618","2":"0","3":"8","4":"2017-08-06 16:13:00","5":"Kayla","6":"Hernandez","7":"mitchelltricia@example.com"},{"1":"7256","2":"9","3":"4","4":"2017-08-06 16:14:00","5":"Melissa","6":"Lee","7":"craig75@example.com"},{"1":"25446","2":"48","3":"5","4":"2017-08-06 16:16:00","5":"John","6":"Williams","7":"tashafowler@example.org"},{"1":"14354","2":"15","3":"1","4":"2017-08-06 16:27:00","5":"Stephanie","6":"Conrad","7":"knolan@example.com"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
+</div>
 </div>
 <div id="veri-seti-kaynağı" class="section level3">
 <h3>Veri Seti Kaynağı</h3>
@@ -1710,6 +1710,7 @@ edilen bu veri seti, gerçek dünya kullanıcı davranışlarını temsil
 etmektedir ve çeşitli analizler için potansiyel sunmaktadır. Sentetik
 veri eklenerek, veri setinin zenginleştirilmesi ve daha geniş kapsamlı
 analizler yapılabilmesi sağlanmıştır.</p>
+</div>
 </div>
 <div id="q3-veri-seti-keşifsel-analizi" class="section level2">
 <h2>Q3: Veri Seti Keşifsel Analizi</h2>
@@ -1972,8 +1973,9 @@ genel dağılımını ve özetini sunmaktadır.</p>
 </tbody>
 </table>
 </div>
-<div id="q4-veri-setinin-bys-platformuna-ihtali" class="section level3">
-<h3>Q4: Veri Setinin BYS Platformuna İhtali</h3>
+</div>
+<div id="q4-veri-setinin-bys-platformuna-ihtali" class="section level2">
+<h2>Q4: Veri Setinin BYS Platformuna İhtali</h2>
 <ol style="list-style-type: decimal">
 <li><p><strong>SuiteCRM’in AWS Üzerine Kurulumu:</strong> SuiteCRM,
 müşteri ilişkileri yönetimi için açık kaynaklı bir platformdur. AWS
@@ -2004,6 +2006,82 @@ farklı sistemler arasında veri alışverişi yapılmasını sağlar ve otomati
 veri senkronizasyonunu mümkün kılar. Bu nedenle, projenin ilerleyen
 aşamalarında veri çekme işlemlerinde SuiteCRM REST API’den
 yararlanılacaktır.</p></li>
+</ol>
+</div>
+<div id="q5-yapılması-planlanan-veri-analizi" class="section level2">
+<h2>Q5 : Yapılması planlanan veri analizi</h2>
+<div id="hizmet-tavsiye-sistemi-oluşturma" class="section level3">
+<h3>Hizmet Tavsiye Sistemi Oluşturma:</h3>
+<div id="görev-1-veriyi-hazırlama" class="section level4">
+<h4>Görev 1: Veriyi Hazırlama</h4>
+<ol style="list-style-type: decimal">
+<li><strong>Veri Okuma ve Temizleme:</strong></li>
+<li><strong>Hizmetleri Temsil Eden Yeni Değişkenin
+Oluşturulması:</strong>
+<ul>
+<li>ServiceId ve CategoryId birleştirilerek hizmetleri temsil eden yeni
+bir değişken oluşturulacak. Bu, her hizmetin kategoriye ve hizmete göre
+tekil olarak tanımlanmasını sağlayacak.</li>
+</ul></li>
+<li><strong>Sepet Tanımının Oluşturulması:</strong>
+<ul>
+<li>Müşterilerin aylık aldıkları hizmetler sepet olarak tanımlanacak ve
+her bir sepete benzersiz bir ID atanacak. Bu, her müşterinin hizmet
+alımlarının zaman içinde nasıl değiştiğini izlememize olanak
+tanıyacak.</li>
+</ul></li>
+</ol>
+</div>
+<div id="görev-2-birliktelik-kuralları-üretme" class="section level4">
+<h4>Görev 2: Birliktelik Kuralları Üretme</h4>
+<ol style="list-style-type: decimal">
+<li><strong>Sepet-Hizmet Pivot Tablosunun Oluşturulması:</strong>
+<ul>
+<li>Müşterilerin aldıkları hizmetleri içeren bir sepet-hizmet pivot
+tablosu oluşturulacak. Bu tablo, her bir müşteri sepetinin hizmetlerle
+ilişkisini gösterecek.</li>
+</ul></li>
+<li><strong>Apriori Algoritması Kullanarak Birliktelik Kurallarının
+Üretilmesi:</strong>
+<ul>
+<li>Apriori algoritması, müşterilerin birlikte aldığı hizmetler
+arasındaki ilişkileri belirlemek için kullanılacak. Belirli bir destek
+değeri üzerinde olan sık görülen hizmet kombinasyonlarını tespit
+edecek.</li>
+</ul></li>
+<li><strong>Hizmet Önerisinde Bulunma:</strong>
+<ul>
+<li>Belirli bir hizmeti alan bir kullanıcıya hizmet önerisinde
+bulunulacak. Bu öneri, Apriori algoritması ile tespit edilen birliktelik
+kurallarına dayanarak yapılacak. Önerilen hizmetler, müşterinin geçmiş
+alımları ve benzer müşterilerin tercihleri dikkate alınarak
+belirlenecek.</li>
+</ul></li>
+</ol>
+</div>
+<div id="zaman-serisi-analizi-yapma" class="section level4">
+<h4>Zaman Serisi Analizi Yapma</h4>
+<ol style="list-style-type: decimal">
+<li><strong>Veri Hazırlığı:</strong></li>
+<li><strong>Zaman Serisi Analizi Yöntemlerinin Uygulanması:</strong>
+<ul>
+<li>Zaman serisi analizi için uygun yöntemler seçilip uygulanacak. Bu
+yöntemler arasında hareketli ortalama, trend analizi, mevsimsellik
+analizi gibi teknikler yer alabilir.</li>
+</ul></li>
+<li><strong>Grafik Çizimi ve Sonuçların Değerlendirilmesi:</strong>
+<ul>
+<li>Verilerden grafikler çizilerek, zaman serisi analizi sonuçları
+görselleştirilecek. Grafikler incelenerek, varsa trendler, mevsimsellik
+veya diğer önemli desenler tespit edilecek. Ayrıca, grafikler üzerinde
+istatistiksel operasyonlar uygulanarak, verilerin ortalama, median gibi
+özellikleri değerlendirilecek.</li>
+</ul></li>
+<li><strong>Problemlerin Belirlenmesi ve Çözüm Önerileri:</strong>
+<ul>
+<li>Grafikler üzerinde tespit edilen problemler gözlemlenecek. Bu
+problemlere yönelik çözüm önerileri sunulacak.</li>
+</ul></li>
 </ol>
 </div>
 </div>
