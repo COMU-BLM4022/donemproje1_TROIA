@@ -150,9 +150,28 @@ missing_data
 ### Kategorik Değişken Dağılımı
 Kategori dağılımı, her bir kategoride bulunan hizmet sayısını göstermektedir. Aşağıdaki grafik, veri setinde en çok alınan hizmet kategorilerini görselleştirmektedir.
 ```{r echo=FALSE}
+
+
+# CategoryString sütununu oluşturuyorum
+df <- df %>%
+  mutate(CategoryString = case_when(
+    CategoryId == 0 ~ "TEMIZLIK",
+    CategoryId == 1 ~ "TADILAT",
+    CategoryId == 2 ~ "NAKLIYAT",
+    CategoryId == 3 ~ "TAMIR",
+    CategoryId == 4 ~ "OZEL_DERS",
+    CategoryId == 5 ~ "SAGLIK",
+    CategoryId == 6 ~ "ORGANIZASYON",
+    CategoryId == 7 ~ "FOTOGRAF_VE_VIDEO",
+    CategoryId == 8 ~ "DIJITAL_VE_KURUMSAL",
+    CategoryId == 9 ~ "EVCIL_HAYVANLAR",
+    CategoryId == 10 ~ "OTO_VE_ARAC",
+    CategoryId == 11 ~ "DIGER"
+  ))
+
 # Kategori Dağılımı Grafiği
 library(ggplot2)
-category_distribution <- table(df$CategoryId)
+category_distribution <- table(df$CategoryString)
 category_distribution_df <- data.frame(Kategori = names(category_distribution), Frekans = as.numeric(category_distribution))
 ggplot(category_distribution_df, aes(x = reorder(Kategori, -Frekans), y = Frekans)) +
   geom_bar(stat = "identity", fill = "skyblue") +
@@ -160,7 +179,7 @@ ggplot(category_distribution_df, aes(x = reorder(Kategori, -Frekans), y = Frekan
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-*Grafikten görüleceği üzere, veri setinde en çok alınan hizmet kategorisi birinci sırada 4 ID'li "Eğitim" kategorisi, ikinci sırada ise 0 ID'li "Temizlik" kategorisi yer almaktadır*
+*Grafikten görüleceği üzere, veri setinde en çok alınan hizmet kategorisi birinci sırada 4 ID'li "OZEL_DERS" kategorisi, ikinci sırada ise 0 ID'li "Temizlik" kategorisi yer almaktadır*
 
 ### Benzersiz Değer Kontrolü
 
