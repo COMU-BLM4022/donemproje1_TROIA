@@ -253,6 +253,8 @@ kable(numeric_summary, caption = "Sayısal Değişkenler İçin Temel İstatisti
 3. **Grafik Çizimi ve Sonuçların Değerlendirilmesi:**
     - Verilerden grafikler çizilerek, zaman serisi analizi sonuçları görselleştirilecek. Grafikler incelenerek, varsa trendler, mevsimsellik veya diğer önemli desenler tespit edilecek. Ayrıca, grafikler üzerinde istatistiksel operasyonlar uygulanarak, verilerin ortalama, median gibi özellikleri değerlendirilecek.
 4. **Problemlerin Belirlenmesi ve Çözüm Önerileri:**
-    - Grafikler üzerinde tespit edilen problemler gözlemlenecek. Bu problemlere yönelik çözüm önerileri sunulacak. 
+    - Grafikler üzerinde tespit edilen problemler gözlemlenecek. Bu problemlere yönelik çözüm önerileri sunulacak.
 
+## Q6 : Çalışan platformun gösterildiği sesli anlatımlı video 
 
+URL: [BYS_donemproje_bolumII_TROIA](https://www.youtube.com/watch?v=XYyGBIR7-1M)
