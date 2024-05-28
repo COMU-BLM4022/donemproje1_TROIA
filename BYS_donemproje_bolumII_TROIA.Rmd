@@ -19,7 +19,7 @@ SuiteCRM'in müşteri yönetimi, satış yönetimi, pazarlama otomasyonu ve rapo
 
 ## Q2: İş problemini çözmede kullanılacak data seti 
 
-# Veri Seti
+### Veri Seti
 *******************************
 *Veri seti müşterilerin aldıkları servislerden ve bu servislerin kategorilerinden oluşmaktadır.*
 *Alınan her hizmetin tarih ve saat bilgisini içermektedir.*
@@ -148,11 +148,32 @@ missing_data <- data.frame(Sutun = colnames(df), Eksik_Veri_Yuzdesi = colMeans(i
 missing_data
 ```
 ### Kategorik Değişken Dağılımı
-Kategori dağılımı, her bir kategoride bulunan hizmet sayısını göstermektedir. Aşağıdaki grafik, veri setinde en çok alınan hizmet kategorilerini görselleştirmektedir.
+Kategori dağılımı, her bir kategoride bulunan hizmet sayısını göstermektedir. Aşağıdaki grafik, veri setinde en çok alınan hizmet kategorilerini 
+görselleştirmektedir.
+
 ```{r echo=FALSE}
+
+
+# CategoryString sütununu oluşturuyorum
+df <- df %>%
+  mutate(CategoryString = case_when(
+    CategoryId == 0 ~ "TEMIZLIK",
+    CategoryId == 1 ~ "TADILAT",
+    CategoryId == 2 ~ "NAKLIYAT",
+    CategoryId == 3 ~ "TAMIR",
+    CategoryId == 4 ~ "OZEL_DERS",
+    CategoryId == 5 ~ "SAGLIK",
+    CategoryId == 6 ~ "ORGANIZASYON",
+    CategoryId == 7 ~ "FOTOGRAF_VE_VIDEO",
+    CategoryId == 8 ~ "DIJITAL_VE_KURUMSAL",
+    CategoryId == 9 ~ "EVCIL_HAYVANLAR",
+    CategoryId == 10 ~ "OTO_VE_ARAC",
+    CategoryId == 11 ~ "DIGER"
+  ))
+
 # Kategori Dağılımı Grafiği
 library(ggplot2)
-category_distribution <- table(df$CategoryId)
+category_distribution <- table(df$CategoryString)
 category_distribution_df <- data.frame(Kategori = names(category_distribution), Frekans = as.numeric(category_distribution))
 ggplot(category_distribution_df, aes(x = reorder(Kategori, -Frekans), y = Frekans)) +
   geom_bar(stat = "identity", fill = "skyblue") +
@@ -160,7 +181,7 @@ ggplot(category_distribution_df, aes(x = reorder(Kategori, -Frekans), y = Frekan
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-*Grafikten görüleceği üzere, veri setinde en çok alınan hizmet kategorisi birinci sırada 4 ID'li "Eğitim" kategorisi, ikinci sırada ise 0 ID'li "Temizlik" kategorisi yer almaktadır*
+*Grafikten görüleceği üzere, veri setinde en çok alınan hizmet kategorisi birinci sırada 4 ID'li "OZEL_DERS" kategorisi, ikinci sırada ise 0 ID'li "Temizlik" kategorisi yer almaktadır*
 
 ### Benzersiz Değer Kontrolü
 
@@ -188,4 +209,52 @@ kable(numeric_summary, caption = "Sayısal Değişkenler İçin Temel İstatisti
 
 ```
 
+## Q4: Veri Setinin BYS Platformuna İhtali 
 
+1. **SuiteCRM'in AWS Üzerine Kurulumu:**
+   SuiteCRM, müşteri ilişkileri yönetimi için açık kaynaklı bir platformdur. AWS (Amazon Web Services) üzerinde SuiteCRM kurulumu gerçekleştirerek, müşteri verilerini etkili bir şekilde yönetmek ve iş süreçlerini optimize etmek için bir altyapı oluşturulmuştur. AWS'nin sağladığı esneklik ve güvenilirlik, SuiteCRM'in bulut tabanlı bir çözüm olarak hızlı ve verimli bir şekilde kurulmasını sağlamıştır.
+
+2. **Veri Seti İçin Modül Oluşturma:**
+   SuiteCRM, modüler bir yapıya sahiptir ve kullanıcılar özelleştirilmiş modüller oluşturarak platformu ihtiyaçlarına göre şekillendirebilirler. Bu bağlamda, proje için gereken veri setine uygun bir modül oluşturulmuştur. Bu modül, müşterilerin hizmet alımıyla ilgili verileri depolamak ve yönetmek için tasarlanmıştır. Modül, müşteri verilerini düzenli bir şekilde kaydetmek ve erişmek için gerekli araçları sağlar.
+
+3. **Veri Seti Dosyasının CSV Formatında Yüklenmesi:**
+   Oluşturulan modül üzerine, proje için gereken veri seti dosyası sistem arayüzü kullanılarak CSV formatında yüklenmiştir. CSV formatı, veri setlerini kolayca okunabilir ve işlenebilir hale getirir. Veri seti, SuiteCRM'in sağladığı veri yönetim araçları kullanılarak sisteme yüklenmiştir. Bu adım, veri setinin CRM platformuna entegrasyonunu sağlar ve veri setinin SuiteCRM içinde kullanılabilir hale gelmesini sağlar.
+
+
+   Veri yükleme işlemi sırasında API kullanılmamıştır, ancak SuiteCRM'in sağladığı API'ler sayesinde bu işlem gerçekleştirilebilir. API'ler, farklı sistemler arasında veri alışverişi yapılmasını sağlar ve otomatik veri senkronizasyonunu mümkün kılar. Bu nedenle, projenin ilerleyen aşamalarında veri çekme işlemlerinde SuiteCRM REST API'den yararlanılacaktır.
+
+
+## Q5 : Yapılması planlanan veri analizi
+
+### Hizmet Tavsiye Sistemi Oluşturma:
+
+#### Görev 1: Veriyi Hazırlama
+
+1. **Veri Okuma ve Temizleme**
+2. **Hizmetleri Temsil Eden Yeni Değişkenin Oluşturulması:**
+    - ServiceId ve CategoryId birleştirilerek hizmetleri temsil eden yeni bir değişken oluşturulacak. Bu, her hizmetin kategoriye ve hizmete göre tekil olarak tanımlanmasını sağlayacak.
+3. **Sepet Tanımının Oluşturulması:**
+    - Müşterilerin aylık aldıkları hizmetler sepet olarak tanımlanacak ve her bir sepete benzersiz bir ID atanacak. Bu, her müşterinin hizmet alımlarının zaman içinde nasıl değiştiğini izlememize olanak tanıyacak.
+
+#### Görev 2: Birliktelik Kuralları Üretme
+
+1. **Sepet-Hizmet Pivot Tablosunun Oluşturulması:**
+    - Müşterilerin aldıkları hizmetleri içeren bir sepet-hizmet pivot tablosu oluşturulacak. Bu tablo, her bir müşteri sepetinin hizmetlerle ilişkisini gösterecek.
+2. **Apriori Algoritması Kullanarak Birliktelik Kurallarının Üretilmesi:**
+    - Apriori algoritması, müşterilerin birlikte aldığı hizmetler arasındaki ilişkileri belirlemek için kullanılacak. Belirli bir destek değeri üzerinde olan sık görülen hizmet kombinasyonlarını tespit edecek.
+3. **Hizmet Önerisinde Bulunma:**
+    - Belirli bir hizmeti alan bir kullanıcıya hizmet önerisinde bulunulacak. Bu öneri, Apriori algoritması ile tespit edilen birliktelik kurallarına dayanarak yapılacak. Önerilen hizmetler, müşterinin geçmiş alımları ve benzer müşterilerin tercihleri dikkate alınarak belirlenecek.
+
+#### Zaman Serisi Analizi Yapma
+
+1. **Veri Hazırlığı**
+2. **Zaman Serisi Analizi Yöntemlerinin Uygulanması:**
+    - Zaman serisi analizi için uygun yöntemler seçilip uygulanacak. Bu yöntemler arasında hareketli ortalama, trend analizi, mevsimsellik analizi gibi teknikler yer alabilir.
+3. **Grafik Çizimi ve Sonuçların Değerlendirilmesi:**
+    - Verilerden grafikler çizilerek, zaman serisi analizi sonuçları görselleştirilecek. Grafikler incelenerek, varsa trendler, mevsimsellik veya diğer önemli desenler tespit edilecek. Ayrıca, grafikler üzerinde istatistiksel operasyonlar uygulanarak, verilerin ortalama, median gibi özellikleri değerlendirilecek.
+4. **Problemlerin Belirlenmesi ve Çözüm Önerileri:**
+    - Grafikler üzerinde tespit edilen problemler gözlemlenecek. Bu problemlere yönelik çözüm önerileri sunulacak.
+
+## Q6 : Çalışan platformun gösterildiği sesli anlatımlı video 
+
+URL: [BYS_donemproje_bolumII_TROIA](https://www.youtube.com/watch?v=XYyGBIR7-1M)
