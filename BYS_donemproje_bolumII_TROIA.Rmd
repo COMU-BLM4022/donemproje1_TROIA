@@ -304,5 +304,5 @@ Zaman serisi analizi, hizmetlerin zaman içindeki değişimlerini incelemek içi
 
 Bu analiz sonucunda, hizmetler arasındaki ilişkileri ve müşterilerin hizmet alım davranışlarını daha iyi anlamak için birliktelik kuralları kullanılarak hizmet önerileri oluşturulmuştur. Bu sistem, müşterilerin ilgilerine göre hizmet önerileri sunarak müşteri memnuniyetini ve hizmet kalitesini artırmayı hedeflemektedir.
 
-Nneri sisteminin performansını artırmak ve daha kapsamlı analizler yapmak için veri setinin genişletilmesi ve farklı algoritmaların kullanılması mümkündür. Ayrıca, zaman serisi analizi ile elde edilen sonuçlar doğrultusunda mevsimsel kampanyalar ve müşteri sadakat programları oluşturulabilecektir.
+Öneri sisteminin performansını artırmak ve daha kapsamlı analizler yapmak için veri setinin genişletilmesi ve farklı algoritmaların kullanılması mümkündür. Ayrıca, zaman serisi analizi ile elde edilen sonuçlar doğrultusunda mevsimsel kampanyalar ve müşteri sadakat programları oluşturulabilecektir.
 
