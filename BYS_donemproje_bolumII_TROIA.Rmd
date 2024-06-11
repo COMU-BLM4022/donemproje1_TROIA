@@ -258,3 +258,51 @@ kable(numeric_summary, caption = "Sayısal Değişkenler İçin Temel İstatisti
 ## Q6 : Çalışan platformun gösterildiği sesli anlatımlı video 
 
 URL: [BYS_donemproje_bolumII_TROIA](https://www.youtube.com/watch?v=XYyGBIR7-1M)
+
+## Final
+
+### Hizmet Tavsiye Sistemi 
+Projenin analiz kodları python ile oluşturulmuştur. İlgili kodlara [buradan](https://github.com/COMU-BLM4022/donemproje1_TROIA/blob/main/Veri_Analizi.py) ulaşabilirsiniz.
+
+#### Sepet Tanımının Oluşturulması
+
+Müşterilerin aylık aldıkları hizmetler sepet olarak tanımlanmış ve her bir sepete benzersiz bir ID atanmıştır. Bu, her müşterinin hizmet alımlarının zaman içinde nasıl değiştiğini izlememize olanak tanımıştır.
+
+![Hizmet ve SepetID](Tables/hizmet_sepet.png)
+
+#### Birliktelik Kuralları Üretme
+
+Birliktelik kuralları, müşterilerin birlikte aldığı hizmetler arasındaki ilişkileri belirlemek için kullanılmıştır. Bu süreçte aşağıdaki adımlar izlenmiştir
+
+##### Sepet-Hizmet Pivot Tablosunun Oluşturulması
+
+Müşterilerin aldıkları hizmetleri içeren bir sepet-hizmet pivot tablosu oluşturulmuştur. Bu tablo, her bir müşteri sepetinin hizmetlerle ilişkisini göstermektedir.
+
+![Sepet-Hizmet Pivot Tablosu](Tables/pivot_table.png)
+
+##### Apriori Algoritması Kullanarak Birliktelik Kurallarının Üretilmesi
+
+Apriori algoritması, müşterilerin birlikte aldığı hizmetler arasındaki ilişkileri belirlemek için kullanılmıştır. Belirli bir destek değeri üzerinde olan sık görülen hizmet kombinasyonları tespit edilmiştir.
+![Birliktelik Kuralları](Tables/rules.png)
+*Yukarıdaki tabloda birliktelik kuralları bulunmaktadır. Tavsiye algoritmasında confidence ve lift değerleri kullanılacaktır.*
+
+##### Hizmet Önerisinde Bulunma
+
+Belirli bir hizmeti alan bir kullanıcıya hizmet önerisinde bulunulmuştur. Bu öneri, Apriori algoritması ile tespit edilen birliktelik kurallarına dayanarak yapılmıştır. Önerilen hizmetler, müşterinin geçmiş alımları ve birliktelik kuralları kullanılarak yapılmıştır.
+
+
+### Zaman Serisi Analizi
+
+Zaman serisi analizi, hizmetlerin zaman içindeki değişimlerini incelemek için yapılmıştır. Zaman serisi analizinin amacı, hizmet taleplerindeki trend bazlı değişiklikleri tespit etmektir.
+
+![Hizmet Zaman Serisi Analizi ](Tables/zaman_serisi.png)
+
+*Son aylarda bir düşüş olduğu görülmektedir. Bundan yola çıkarak komisyonlarda indirime gidilebilir. İleriki aylarda kampanyalar düzenlenebilir.*
+
+
+## Sonuç
+
+Bu analiz sonucunda, hizmetler arasındaki ilişkileri ve müşterilerin hizmet alım davranışlarını daha iyi anlamak için birliktelik kuralları kullanılarak hizmet önerileri oluşturulmuştur. Bu sistem, müşterilerin ilgilerine göre hizmet önerileri sunarak müşteri memnuniyetini ve hizmet kalitesini artırmayı hedeflemektedir.
+
+Nneri sisteminin performansını artırmak ve daha kapsamlı analizler yapmak için veri setinin genişletilmesi ve farklı algoritmaların kullanılması mümkündür. Ayrıca, zaman serisi analizi ile elde edilen sonuçlar doğrultusunda mevsimsel kampanyalar ve müşteri sadakat programları oluşturulabilecektir.
+
